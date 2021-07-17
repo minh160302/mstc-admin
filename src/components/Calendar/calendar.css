@@ -1,0 +1,53 @@
+.rbc-header:last-child span {
+    padding-right: 0 !important;
+}
+
+.rbc-header {
+    text-align: center !important;
+    font-weight: 300 !important;
+    color: #4E5260 !important;
+    font-size: 12px !important;
+    line-height: 14px !important;
+    font-family: 'Roboto' !important;
+}
+
+.rbc-date-cell {
+    text-align: center !important;
+    padding-right: 0 !important;
+    font-size: 12px;
+    line-height: 14px;
+    font-family: 'Roboto';
+    color: #333333;
+}
+
+.rbc-header + .rbc-header {
+    border: none !important;
+}
+
+.rbc-day-bg + .rbc-day-bg {
+    border: none !important;
+}
+
+.rbc-month-view {
+    border: none !important;
+}
+
+.rbc-month-row + .rbc-month-row  {
+    border: none !important;
+}
+
+.rbc-month-header {
+    margin-bottom: 10px;
+}
+
+.rbc-off-range-bg {
+    background-color: transparent;
+}
+
+.rbc-header {
+    border: none !important;
+}
+
+.rbc-today {
+    background-color: transparent;
+}

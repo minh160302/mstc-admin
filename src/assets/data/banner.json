@@ -1,0 +1,105 @@
+{
+  "page": 1,
+  "size": 10,
+  "total": 9,
+  "data": [
+    {
+      "id": 12234301,
+      "type":"slide",
+      "group":"one",
+      "title": "BlackFriday 2020",
+      "description": null,
+      "activated": false,
+      "imageUrl": "https://storage.googleapis.com/pte-magic-banner/1606442439013_banner.png",
+      "createDate": "25/11/2020"
+    },
+    {
+      "id": 9522301,
+      "name": "Mid Autumn",
+      "description": null,
+      "link": "https://storage.googleapis.com/pte-magic-banner/1601055773813_banner.jpg",
+      "activated": false,
+      "startDate": "25/09/2020",
+      "endDate": "04/10/2020",
+      "keyword": null,
+      "status": "Expired"
+    },
+    {
+      "id": 7511101,
+      "name": "AUGUST Sale 30%",
+      "description": "SALE 30%",
+      "link": "https://storage.googleapis.com/pte-magic-banner/1597395808604_banner.jpg",
+      "activated": false,
+      "startDate": "13/08/2020",
+      "endDate": "22/08/2020",
+      "keyword": null,
+      "status": "Expired"
+    },
+    {
+      "id": 4916302,
+      "name": "MAGIC30",
+      "description": "Discount 30%",
+      "link": "https://storage.googleapis.com/pte-magic-banner/1592974634047_banner.png",
+      "activated": false,
+      "startDate": "24/06/2020",
+      "endDate": "30/06/2020",
+      "keyword": null,
+      "status": "Expired"
+    },
+    {
+      "id": 3941751,
+      "name": "MAGIC54",
+      "description": "Magic54",
+      "link": "https://storage.googleapis.com/pte-magic-banner/1591111708977_banner.jpg",
+      "activated": false,
+      "startDate": "03/06/2020",
+      "endDate": "10/06/2020",
+      "keyword": null,
+      "status": "Expired"
+    },
+    {
+      "id": 3499901,
+      "name": "April Sale 50%",
+      "description": "Sale 50%",
+      "link": "https://storage.googleapis.com/pte-magic-banner/1585927511673_banner.png",
+      "activated": false,
+      "startDate": "03/04/2020",
+      "endDate": "12/04/2020",
+      "keyword": null,
+      "status": "Expired"
+    },
+    {
+      "id": 3424352,
+      "name": "COV_50",
+      "description": "Discount 50%",
+      "link": "https://storage.googleapis.com/pte-magic-banner/1584599726391_banner.png",
+      "activated": false,
+      "startDate": "19/03/2020",
+      "endDate": "28/03/2020",
+      "keyword": null,
+      "status": "Expired"
+    },
+    {
+      "id": 3329855,
+      "name": "COV_NEW",
+      "description": null,
+      "link": "https://storage.googleapis.com/pte-magic-banner/1584003478234_banner.png",
+      "activated": false,
+      "startDate": "12/03/2020",
+      "endDate": "15/03/2020",
+      "keyword": null,
+      "status": "Expired"
+    },
+    {
+      "id": 3329852,
+      "name": "COV40New",
+      "description": "Cov40 discount",
+      "link": "https://storage.googleapis.com/pte-magic-banner/1583625387351_banner.png",
+      "activated": false,
+      "startDate": "07/03/2020",
+      "endDate": "11/03/2020",
+      "keyword": null,
+      "status": "Expired"
+    }
+  ]
+}
