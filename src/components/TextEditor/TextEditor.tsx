@@ -1,10 +1,10 @@
-import { makeStyles } from "@material-ui/core"
+import { createStyles, makeStyles } from "@material-ui/core"
 import Button from "components/CustomButtons/Button";
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useLayoutEffect } from "react"
 import EditorJs from 'react-editor-js';
 import { EDITOR_JS_TOOLS } from "./tools"
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(() => createStyles({
   editorContainer: {
     width: "100%",
     minHeight: "400px",
@@ -25,6 +25,10 @@ const TextEditor: React.FC<TextEditorProps> = (props) => {
   const classes = useStyles();
 
   const [editorInstance, setEditorInstance] = useState();
+
+  // useLayoutEffect(() => {
+  //   setTextEditor(initialState)
+  // }, [initialState])
 
   const handleChange = async () => {
     const saved = await editorInstance.save();

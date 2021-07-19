@@ -17,5 +17,6 @@ export const ARTICLE = {
   updateArticle: "article/UPDATE_ARTICLE",
   getArticles: "article/GET_ARTICLES",
   getArticleById: "article/GET_ARTICLE_BY_ID",
-  deleteArticle: "article/DELETE_ARTICLE"
+  deleteArticle: "article/DELETE_ARTICLE",
+  cleanUpArticle: "article/CLEAN_UP_ARTICLE"
 }

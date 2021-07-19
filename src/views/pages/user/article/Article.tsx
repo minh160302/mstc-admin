@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
@@ -7,7 +7,7 @@ import Card from "components/Card/Card"
 import TextEditor from "components/TextEditor/TextEditor";
 import { createStyles, makeStyles, TextField } from "@material-ui/core";
 import FormSelect from "components/Select/FormSelect";
-import { createArticle } from "store/actions/article"
+import { createArticle, updateArticle } from "store/actions/article"
 import { IRootState } from "store/reducers";
 import { connect } from "react-redux";
 
@@ -46,14 +46,18 @@ function xoa_dau(str) {
 
 
 // redux typescript
-interface StateProps { }
+interface StateProps {
+  article: any;
+}
 
 interface DispatchProps {
-  createArticle: (params: any) => any
+  createArticle: (params: any) => any;
+  updateArticle: (params: any) => any;
 }
 
 interface ArticleProps {
-  handleCancelAdd: () => void
+  handleCancelAdd: () => void;
+  isEdit: boolean;
 }
 
 type Props = StateProps & DispatchProps & ArticleProps
@@ -62,7 +66,7 @@ type Props = StateProps & DispatchProps & ArticleProps
 const Article: React.FC<Props> = (props) => {
   const classes = useStyles();
 
-  const { handleCancelAdd } = props
+  const { handleCancelAdd, isEdit } = props
 
   const [invalid, setInvalid] = useState({
     title: false,
@@ -123,7 +127,9 @@ const Article: React.FC<Props> = (props) => {
     })
   }
 
+  // article state
   const [textEditor, setTextEditor] = useState({})
+  const [initialState, setInitialState] = useState({})
 
   // save article
   const handleSave = () => {
@@ -131,7 +137,7 @@ const Article: React.FC<Props> = (props) => {
     console.log(option)
     console.log(textEditor)
 
-    const data = {
+    const data: any = {
       ...formValue,
       content: JSON.stringify(textEditor),
       status: option,
@@ -139,7 +145,12 @@ const Article: React.FC<Props> = (props) => {
 
     const invalidInput = Object.keys(data).filter(key => data[key] === "")
     if (invalidInput.length === 0) {
-      props.createArticle(data)
+      if (isEdit) {
+        data.id = props.article.id
+        props.updateArticle(data);
+      } else {
+        props.createArticle(data)
+      }
     } else {
       console.log(invalidInput)
       let invalidKeys = { ...invalid }
@@ -148,8 +159,23 @@ const Article: React.FC<Props> = (props) => {
       console.log(invalidKeys)
       setInvalid(invalidKeys)
     }
-
   }
+
+  useEffect(() => {
+    if (isEdit) {
+      const defaultValue = {
+        title: props.article.title,
+        slug: props.article.slug,
+        description: props.article.description,
+        // createdDate: props.article.created_date,
+        // updatedDate: props.article.updated_date,
+      }
+
+      setFormValue(defaultValue)
+      setOption(props.article.status)
+    }
+  }, [props.article])
+
 
   return (
     <GridContainer>
@@ -158,10 +184,10 @@ const Article: React.FC<Props> = (props) => {
           <GridContainer className={classes.inputContainer}>
             <GridItem xs={12} sm={12} md={12} className={classes.buttonContainer}>
               <Button color="facebook" round onClick={handleSave}>
-                Save
+                Thêm
               </Button>
-              <Button color="gray" round onClick={handleCancelAdd}>
-                Cancel
+              <Button color="warning" round onClick={handleCancelAdd}>
+                Huỷ
               </Button>
             </GridItem>
           </GridContainer>
@@ -232,11 +258,21 @@ const Article: React.FC<Props> = (props) => {
         </div>
         <div>
           <GridItem xs={12} sm={12} md={12}>
-            <TextEditor
-              initialState={{}}
-              textEditor={textEditor}
-              setTextEditor={setTextEditor}
-            />
+            {isEdit === false
+              ? <TextEditor initialState={{ time: Date.now(), blocks: [], version: "2.22.1" }}
+                textEditor={textEditor}
+                setTextEditor={setTextEditor}
+              />
+              : <>
+                {
+                  props.article.content && <TextEditor
+                    textEditor={textEditor}
+                    setTextEditor={setTextEditor}
+                    initialState={props.article.content}
+                  />
+                }
+              </>
+            }
           </GridItem>
         </div>
       </GridItem>
@@ -245,12 +281,15 @@ const Article: React.FC<Props> = (props) => {
 }
 
 
-const mapStateToProps = ({ }: IRootState) => {
-  return {}
+const mapStateToProps = ({ article }: IRootState) => {
+  return {
+    article: article.article
+  }
 }
 
 const mapDispatchToProps = {
-  createArticle
+  createArticle,
+  updateArticle
 }
 
 export default connect<StateProps, DispatchProps, ArticleProps>(mapStateToProps, mapDispatchToProps)(Article)

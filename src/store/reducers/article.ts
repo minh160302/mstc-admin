@@ -9,6 +9,7 @@ const initialState = {
   page: 0,
   size: 0,
   total: 0,
+  isDeleted: false
 };
 
 export type ArticleState = Readonly<typeof initialState>;
@@ -17,25 +18,34 @@ export default (state: ArticleState = initialState, action): ArticleState => {
   switch (action.type) {
     case REQUEST(ARTICLE.createArticle):
     case REQUEST(ARTICLE.getArticles):
+    case REQUEST(ARTICLE.getArticleById):
+    case REQUEST(ARTICLE.updateArticle):
+    case REQUEST(ARTICLE.deleteArticle):
       return {
         ...state,
         loading: true,
       };
     case FAILURE(ARTICLE.createArticle):
     case FAILURE(ARTICLE.getArticles):
+    case FAILURE(ARTICLE.getArticleById):
+    case FAILURE(ARTICLE.updateArticle):
+    case FAILURE(ARTICLE.deleteArticle):
       return {
         ...state,
         loading: true,
         errorMessage: action.payload,
       };
     case SUCCESS(ARTICLE.createArticle):
-      console.log(action.payload)
+      return {
+        ...state,
+        article: action.payload.data,
+      };
+    case SUCCESS(ARTICLE.updateArticle):
       return {
         ...state,
         article: action.payload.data,
       };
     case SUCCESS(ARTICLE.getArticles):
-      console.log(action.payload)
       return {
         ...state,
         articles: action.payload.data,
@@ -43,6 +53,21 @@ export default (state: ArticleState = initialState, action): ArticleState => {
         size: action.payload.size,
         total: action.payload.total,
       };
+    case SUCCESS(ARTICLE.getArticleById):
+      return {
+        ...state,
+        article: action.payload
+      };
+    case SUCCESS(ARTICLE.deleteArticle):
+      return {
+        ...state,
+        isDeleted: !state.isDeleted
+      }
+    case (ARTICLE.cleanUpArticle):
+      return {
+        ...state,
+        article: {}
+      }
 
     default:
       return state;

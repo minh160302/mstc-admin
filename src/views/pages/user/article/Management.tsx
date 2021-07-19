@@ -1,5 +1,5 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
@@ -15,7 +15,7 @@ import AddIcon from "@material-ui/icons/Add";
 // redux
 import { connect } from "react-redux";
 import { IRootState } from "store/reducers";
-import { getArticles } from "store/actions/article"
+import { getArticles, getArticleById, cleanUpArticle, deleteArticle } from "store/actions/article"
 import Article from "./Article";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -64,10 +64,15 @@ interface StateProps {
   page: number;
   size: number;
   total: number;
+  article: any;
+  isDeleted: boolean;
 }
 
 interface DispatchProps {
-  getArticles: (params: any) => any
+  getArticles: (params: any) => any;
+  getArticleById: (params: string) => any;
+  cleanUpArticle: () => any;
+  deleteArticle: (params: string) => any;
 }
 
 interface ArticleProps { }
@@ -77,12 +82,16 @@ type Props = StateProps & DispatchProps & ArticleProps
 const Management: React.FC<Props> = (props) => {
   const classes = useStyles();
   const [displayAdd, setDisplayAdd] = useState(false)
+  const [isEdit, setIsEdit] = useState(false)
+  const [isDelete, setIsDelete] = useState(false)
 
   useEffect(() => {
     props.getArticles({ page: 1, size: 10 })
   }, [props.isAuthenticated])
 
   const handleAddArticle = () => {
+    setIsEdit(false)
+    props.cleanUpArticle();
     setDisplayAdd(true)
   }
 
@@ -93,6 +102,25 @@ const Management: React.FC<Props> = (props) => {
   const onChangePage = (page, size) => {
     props.getArticles({ page: page + 1, size: size });
   };
+
+  const handleEdit = async (id) => {
+    props.cleanUpArticle()
+    setIsEdit(true)
+    await props.getArticleById(id);
+    setDisplayAdd(true)
+  }
+
+  const handleDelete = async (id) => {
+    props.deleteArticle(id);
+  }
+
+  useLayoutEffect(() => {
+    props.getArticles({ page: 1, size: 10 })
+  }, [props.isDeleted])
+
+  useEffect(() => {
+    props.getArticles({ page: 1, size: 10 })
+  }, [displayAdd])
 
   const columns = [
     {
@@ -128,7 +156,7 @@ const Management: React.FC<Props> = (props) => {
       ),
     },
     {
-      field: "action",
+      field: "id",
       title: "Hành động",
       cellStyle: { width: 150 },
       tableData: { width: 150 },
@@ -138,6 +166,9 @@ const Management: React.FC<Props> = (props) => {
             justIcon
             color="facebook"
             round
+            onClick={() => {
+              handleEdit(record.id)
+            }}
           >
             <EditIcon />
           </Button>
@@ -145,6 +176,9 @@ const Management: React.FC<Props> = (props) => {
             justIcon
             color="danger"
             round
+            onClick={() => {
+              handleDelete(record.id)
+            }}
           >
             <DeleteIcon />
           </Button>
@@ -186,7 +220,9 @@ const Management: React.FC<Props> = (props) => {
               }}
               onChangePage={onChangePage}
             />
-            : <Article handleCancelAdd={handleCancelAdd} />
+            : <>
+              <Article isEdit={isEdit} handleCancelAdd={handleCancelAdd} />
+            </>
         }
       </Card>
     </GridContainer>
@@ -199,12 +235,17 @@ const mapStateToProps = ({ article, authentication }: IRootState) => {
     data: article.articles,
     page: article.page,
     size: article.size,
-    total: article.total
+    total: article.total,
+    article: article.article,
+    isDeleted: article.isDeleted
   }
 }
 
 const mapDispatchToProps = {
-  getArticles
+  getArticles,
+  getArticleById,
+  cleanUpArticle,
+  deleteArticle
 }
 
 export default connect<StateProps, DispatchProps, ArticleProps>(mapStateToProps, mapDispatchToProps)(Management)

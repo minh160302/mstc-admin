@@ -37,6 +37,24 @@ const fetchAxios = {
     })
 
     return response;
+  },
+
+  onPut: (api: string, payload: any, config?: AxiosRequestConfig) => {
+    const response = axios
+      .put(api, payload, config)
+      .then((res) => {
+        return res;
+      })
+      .catch((error) => {
+        return error;
+      });
+    return response;
+  },
+
+  onDelete: (api: string, config?: AxiosRequestConfig) => {
+    axios.delete(api).catch((error) => {
+      return error;
+    });
   }
 };
 
