@@ -1,9 +1,10 @@
 // @material-ui/icons
-
-
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import EmailIcon from '@material-ui/icons/Email';
 // components
 import { ROUTE_PATH } from "utils/constants";
 import Article from "views/pages/user/article/Management";
+import EmailManagement from 'views/pages/user/email/EmailManagement';
 
 
 const dashRoutes = [
@@ -12,7 +13,16 @@ const dashRoutes = [
     name: "Bài viết",
     component: Article,
     layout: ROUTE_PATH.USER,
+    // icon: <AssignmentIcon />
   },
+  {
+    path: "/email",
+    name: "Quản lý Email",
+    component: EmailManagement,
+    layout: ROUTE_PATH.USER,
+    // icon: <EmailIcon />
+ },
+
   // {
   //   collapse: true,
   //   name: "Quản lý tài khoản",

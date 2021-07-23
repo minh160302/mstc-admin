@@ -13,6 +13,8 @@ import AdminNavbar from "../components/Navbars/AdminNavbar.js";
 import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 // import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
+import smtcLogo from "../assets/img/logo-transparent.png"
+
 
 import routes from "user-routes";
 import styles from "../assets/jss/material-dashboard-pro-react/layouts/adminStyle";
@@ -198,6 +200,7 @@ export function Layout(props) {
             <Sidebar
               routes={routes}
               logoText={"MSTC"}
+              logo={smtcLogo}
               image={image}
               handleDrawerToggle={handleDrawerToggle}
               open={mobileOpen}

@@ -20,3 +20,13 @@ export const ARTICLE = {
   deleteArticle: "article/DELETE_ARTICLE",
   cleanUpArticle: "article/CLEAN_UP_ARTICLE"
 }
+
+
+export const EMAIL = {
+  createEmail: "email/CREATE_EMAIL",
+  getEmails: "email/GET_EMAILS",
+  updateEmail: "email/UPDATE_EMAIL",
+  getEmailById: "email/GET_EMAIL_BY_ID",
+  deleteEmail: "email/DELETE_EMAIL",
+  sendEmail: "email/SEND_EMAIL"
+}

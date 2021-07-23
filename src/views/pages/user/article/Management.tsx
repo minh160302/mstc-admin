@@ -1,5 +1,6 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core";
 import React, { useEffect, useLayoutEffect, useState } from "react";
+import classNames from "classnames"
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
@@ -21,7 +22,7 @@ import Article from "./Article";
 const useStyles = makeStyles((theme: Theme) => createStyles({
   cardContainer: {
     paddingBottom: 30,
-    paddingTop: 30
+    // paddingTop: 30
   },
   alignItemsCenter: {
     display: "flex",
@@ -55,6 +56,27 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
       background: "#3b5998",
     },
   },
+  status: {
+    fontSize: 14,
+    lineHeight: "16px",
+    fontFamily: "Roboto",
+    fontStyle: "normal",
+    fontWeight: "normal",
+    padding: 6,
+    borderRadius: 6
+  },
+  ARCHIVED_status: {
+    background: "#dc3c3c",
+    color: "#ffffff"
+  },
+  PUBLISHED_status: {
+    background: "#2196f3",
+    color: "#ffffff"
+  },
+  TRENDING_status: {
+    background: "#4caf50",
+    color: "#ffffff"
+  },
 }))
 
 // redux typescript
@@ -83,7 +105,7 @@ const Management: React.FC<Props> = (props) => {
   const classes = useStyles();
   const [displayAdd, setDisplayAdd] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
-  const [isDelete, setIsDelete] = useState(false)
+  // const [isDelete, setIsDelete] = useState(false)
 
   useEffect(() => {
     props.getArticles({ page: 1, size: 10 })
@@ -128,18 +150,50 @@ const Management: React.FC<Props> = (props) => {
       title: "Đường link",
       cellStyle: { width: 100 },
       tableData: { width: 100 },
+      render: (record) => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textName}>{record.slug}</div>
+        </div>
+      ),
     },
     {
       field: "title",
       title: "Tên",
+      render: (record) => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textName}>{record.title}</div>
+        </div>
+      ),
     },
     {
       field: "description",
       title: "Mô tả",
+      render: (record) => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textName}>{record.description}</div>
+        </div>
+      ),
+    },
+    {
+      field: "status",
+      title: "Trạng thái",
+      render: (record) => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classNames({
+            [classes.status]: true,
+            [classes[`${record.status}_status`]]: true
+          })}>{record.status}</div>
+        </div>
+      ),
     },
     {
       field: "created_date",
       title: "Ngày tạo",
+      render: (record) => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textName}>{record.created_date}</div>
+        </div>
+      ),
     },
     {
       field: "image_url",

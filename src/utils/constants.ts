@@ -1,7 +1,7 @@
 export const ROUTE_PATH = {
   AUTH: "/a",
   OVERVIEW: "/o",
-  MESSAGES: '/m',
+  MAIL: '/m',
   USER: "/u"
 }
 
