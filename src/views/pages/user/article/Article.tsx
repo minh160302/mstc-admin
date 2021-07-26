@@ -10,6 +10,7 @@ import FormSelect from "components/Select/FormSelect";
 import { createArticle, updateArticle } from "store/actions/article"
 import { IRootState } from "store/reducers";
 import { connect } from "react-redux";
+import ImageUpload from "components/CustomUpload/ImageUpload";
 
 const useStyles = makeStyles((theme) => createStyles({
   cardContainer: {
@@ -24,6 +25,9 @@ const useStyles = makeStyles((theme) => createStyles({
     display: "flex",
     justifyContent: "flex-end"
   },
+  inputUpload: {
+    display: "none",
+  }
 }))
 
 function xoa_dau(str) {
@@ -48,6 +52,7 @@ function xoa_dau(str) {
 // redux typescript
 interface StateProps {
   article: any;
+  justSaved: boolean;
 }
 
 interface DispatchProps {
@@ -80,6 +85,11 @@ const Article: React.FC<Props> = (props) => {
     slug: "",
     description: "",
   })
+
+  const [imageUrl, setImageUrl] = useState("")
+  const onImageChange = (value) => {
+    setImageUrl(value)
+  }
 
   const handleChange = (event) => {
     setInvalid({
@@ -129,18 +139,16 @@ const Article: React.FC<Props> = (props) => {
 
   // article state
   const [textEditor, setTextEditor] = useState({})
-  const [initialState, setInitialState] = useState({})
+  const [initialState, setInitialState] = useState({ time: Date.now(), blocks: [], version: "2.22.1" })
+
 
   // save article
   const handleSave = () => {
-    console.log(formValue)
-    console.log(option)
-    console.log(textEditor)
-
     const data: any = {
       ...formValue,
       content: JSON.stringify(textEditor),
       status: option,
+      image_url: imageUrl
     }
 
     const invalidInput = Object.keys(data).filter(key => data[key] === "")
@@ -152,7 +160,6 @@ const Article: React.FC<Props> = (props) => {
         props.createArticle(data)
       }
     } else {
-      console.log(invalidInput)
       let invalidKeys = { ...invalid }
       invalidInput.map(item => invalidKeys[item] = true)
 
@@ -161,7 +168,7 @@ const Article: React.FC<Props> = (props) => {
     }
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (isEdit) {
       const defaultValue = {
         title: props.article.title,
@@ -170,7 +177,7 @@ const Article: React.FC<Props> = (props) => {
         // createdDate: props.article.created_date,
         // updatedDate: props.article.updated_date,
       }
-
+      setImageUrl(props.article.image_url)
       setFormValue(defaultValue)
       setOption(props.article.status)
     }
@@ -255,6 +262,19 @@ const Article: React.FC<Props> = (props) => {
               />
             </GridItem>
           </GridContainer>
+          <GridContainer className={classes.inputContainer}>
+            <GridItem xs={12} sm={6} md={6}>
+              <ImageUpload
+                url={imageUrl}
+                onChange={onImageChange}
+              />
+              {/* <ImageUpload
+                onChange={onChange}
+                url={value}
+                {...rest}
+              /> */}
+            </GridItem>
+          </GridContainer>
         </div>
         <div>
           <GridItem xs={12} sm={12} md={12}>
@@ -283,7 +303,8 @@ const Article: React.FC<Props> = (props) => {
 
 const mapStateToProps = ({ article }: IRootState) => {
   return {
-    article: article.article
+    article: article.article,
+    justSaved: article.justSaved
   }
 }
 

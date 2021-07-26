@@ -9,7 +9,8 @@ const initialState = {
   page: 0,
   size: 0,
   total: 0,
-  isDeleted: false
+  isDeleted: false,
+  justSaved: false,
 };
 
 export type ArticleState = Readonly<typeof initialState>;
@@ -39,11 +40,13 @@ export default (state: ArticleState = initialState, action): ArticleState => {
       return {
         ...state,
         article: action.payload.data,
+        justSaved: !state.justSaved
       };
     case SUCCESS(ARTICLE.updateArticle):
       return {
         ...state,
         article: action.payload.data,
+        justSaved: !state.justSaved,
       };
     case SUCCESS(ARTICLE.getArticles):
       return {

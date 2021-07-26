@@ -107,9 +107,9 @@ const Management: React.FC<Props> = (props) => {
   const [isEdit, setIsEdit] = useState(false)
   // const [isDelete, setIsDelete] = useState(false)
 
-  useEffect(() => {
-    props.getArticles({ page: 1, size: 10 })
-  }, [props.isAuthenticated])
+  // useEffect(() => {
+  //   props.getArticles({ page: 1, size: 10 })
+  // }, [])
 
   const handleAddArticle = () => {
     setIsEdit(false)
@@ -136,13 +136,13 @@ const Management: React.FC<Props> = (props) => {
     props.deleteArticle(id);
   }
 
-  useLayoutEffect(() => {
-    props.getArticles({ page: 1, size: 10 })
-  }, [props.isDeleted])
-
   useEffect(() => {
     props.getArticles({ page: 1, size: 10 })
-  }, [displayAdd])
+  }, [props.isDeleted, props.isAuthenticated, displayAdd])
+
+  // useEffect(() => {
+  //   props.getArticles({ page: 1, size: 10 })
+  // }, [displayAdd])
 
   const columns = [
     {
@@ -202,8 +202,8 @@ const Management: React.FC<Props> = (props) => {
         <div className={classes.alignItemsCenter}>
           <div className={classes.textName}>
             {record.image_url && (
-              // <img src={record.image_url} style={{ width: 70 }} />
-              <div>{record.image_url}</div>
+              <img src={record.image_url} style={{ width: "75%" }} />
+              // <div>{record.image_url}</div>
             )}
           </div>
         </div>
@@ -241,8 +241,6 @@ const Management: React.FC<Props> = (props) => {
     },
   ];
 
-
-  console.log(props)
   return (
     <GridContainer>
       <Card className={classes.cardContainer}>

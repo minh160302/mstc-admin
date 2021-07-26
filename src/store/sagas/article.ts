@@ -35,7 +35,7 @@ function* getArticles(action) {
       payload: articles
     })
   } catch (error) {
-    toast.error("fetch error")
+    // toast.error("fetch error")
     yield put({
       type: FAILURE(ARTICLE.getArticles),
       payload: "fetch error"
@@ -51,7 +51,8 @@ function* getArticleById(action) {
       toast.error(article.message)
     }
 
-    article.content = JSON.parse(article.content)
+    article.content = yield JSON.parse(article.content)
+    console.log(article)
     yield put({
       type: SUCCESS(ARTICLE.getArticleById),
       payload: article

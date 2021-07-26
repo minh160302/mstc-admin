@@ -21,14 +21,17 @@ interface TextEditorProps {
 
 const TextEditor: React.FC<TextEditorProps> = (props) => {
   const { textEditor, setTextEditor, initialState } = props
-
   const classes = useStyles();
 
   const [editorInstance, setEditorInstance] = useState();
 
-  // useLayoutEffect(() => {
-  //   setTextEditor(initialState)
-  // }, [initialState])
+  useLayoutEffect(() => {
+    if (typeof initialState !== "string") {
+      if (initialState.blocks.length > 0) {
+        setTextEditor(initialState)
+      }
+    }
+  }, [initialState])
 
   const handleChange = async () => {
     const saved = await editorInstance.save();
@@ -36,8 +39,13 @@ const TextEditor: React.FC<TextEditorProps> = (props) => {
     setTextEditor(saved)
   }
 
+
+  const onContextmenu = (e) => {
+    e.preventDefault();
+  };
+
   return (
-    <div className={classes.editorContainer}>
+    <div className={classes.editorContainer} onContextMenu={onContextmenu}>
       <EditorJs
         holder="editorjs"
         data={initialState}

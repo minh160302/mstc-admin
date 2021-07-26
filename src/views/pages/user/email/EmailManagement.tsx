@@ -125,13 +125,13 @@ const EmailManagement: React.FC<Props> = (props) => {
     }
   }
 
+  // useEffect(() => {
+  //   props.getEmails({ page: 1, size: 10 })
+  // }, [props.isAuthenticated])
+
   useEffect(() => {
     props.getEmails({ page: 1, size: 10 })
-  }, [props.isAuthenticated])
-
-  useLayoutEffect(() => {
-    props.getEmails({ page: 1, size: 10 })
-  }, [props.isDeleted, props.email])
+  }, [props.isDeleted, props.email, props.isAuthenticated])
 
   const onChangePage = (page, size) => {
     props.getEmails({ page: page + 1, size: size });

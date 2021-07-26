@@ -18,44 +18,69 @@ import axios from "axios";
 
 export const EDITOR_JS_TOOLS = {
   embed: Embed,
-  table: Table,
-  paragraph: Paragraph,
-  list: List,
+  table: {
+    class: Table,
+    inlineToolbar: true,
+  },
+  paragraph: {
+    class: Paragraph,
+    inlineToolbar: true,
+  },
+  list: {
+    class: List,
+    inlineToolbar: true,
+  },
   code: Code,
   // linkTool: LinkTool,
   image: {
     class: Image,
-    // config: {
-    //   uploader: {
-    //     uploadByFile(file) {
-    //       let reader = new FileReader();
-    //       const formData = new FormData();
-    //       formData.append("file", file);
-    //       return axios
-    //         .post(`/api/upload`, formData, {
-    //           headers: {
-    //             "Content-Type": "multipart/form-data",
-    //           },
-    //         })
-    //         .then((json) => {
-    //           return {
-    //             success: 1,
-    //             file: {
-    //               url: json.data.path,
-    //               // any other image data you want to store, such as width, height, color, extension, etc
-    //             },
-    //           };
-    //         });
-    //     },
-    //   },
-    // },
+    inlineToolbar: true,
+    config: {
+      uploader: {
+        uploadByFile(file) {
+          let reader = new FileReader();
+          const formData = new FormData();
+          formData.append("file", file);
+          return axios
+            .post(`/api/upload`, formData, {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            })
+            .then((json) => {
+              return {
+                success: 1,
+                file: {
+                  url: json.data.path,
+                  // any other image data you want to store, such as width, height, color, extension, etc
+                },
+              };
+            });
+        },
+      },
+    },
   },
   raw: Raw,
-  header: Header,
-  quote: Quote,
-  marker: Marker,
-  checklist: CheckList,
-  delimiter: Delimiter,
+  header: {
+    class: Header,
+    inlineToolbar: true
+  },
+  quote: {
+    class: Quote,
+    inlineToolbar: true
+  },
+  marker: {
+    class: Marker,
+    inlineToolbar: true,
+  },
+  checklist: {
+    class: CheckList,
+    inlineToolbar: true
+  },
+  delimiter: {
+    class: Delimiter,
+    inlineToolbar: true,
+  },
   // inlineCode: InlineCode,
   simpleImage: SimpleImage,
 };
