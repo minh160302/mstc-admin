@@ -85,11 +85,14 @@ function* updateEmail(action) {
 
 function* deleteEmail(action) {
   try {
-    yield call(deleteEmailService, action.payload);
-    yield put({
-      type: SUCCESS(EMAIL.deleteEmail),
-    });
-    toast.success("Email deleted successfully!")
+    const result = yield call(deleteEmailService, action.payload);
+    if (result) {
+      yield put({
+        type: SUCCESS(EMAIL.deleteEmail),
+        payload: result
+      });
+      toast.success("Email deleted successfully!")
+    }
   } catch (error) {
     yield put({
       type: FAILURE(EMAIL.deleteEmail),
@@ -120,7 +123,7 @@ export function* watchEmails() {
   yield takeLatest(EMAIL.getEmails, getEmails);
   yield takeLatest(EMAIL.getEmailById, getEmailById);
   yield takeLatest(EMAIL.updateEmail, updateEmail);
-  yield takeLatest(EMAIL.deleteEmail, deleteEmail);
+  yield takeEvery(EMAIL.deleteEmail, deleteEmail);
   yield takeLatest(REQUEST(EMAIL.sendEmail), sendEmail)
 }
 

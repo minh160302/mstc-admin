@@ -169,7 +169,7 @@ function LoginPage(props) {
         >
           Login
         </Button>
-        <Button
+        {/* <Button
           round
           color="pinterest"
           onClick={() => {
@@ -177,7 +177,7 @@ function LoginPage(props) {
           }}
         >
           Create a new account
-        </Button>
+        </Button> */}
       </div>
     </div>
   )

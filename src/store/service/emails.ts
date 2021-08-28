@@ -23,7 +23,8 @@ export const getEmailByIdService = async (payload) => {
 }
 
 export const deleteEmailService = async (payload) => {
-  await fetchAxios.onDelete(`/api/emails/${payload}`)
+  const res = await fetchAxios.onDelete(`/api/emails/${payload}`)
+  return "res";
 }
 
 export const sendEmailService = async (payload) => {

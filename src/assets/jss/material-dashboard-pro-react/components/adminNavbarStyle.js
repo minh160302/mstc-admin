@@ -77,6 +77,9 @@ const headerStyle = (theme) => ({
   },
   flex: {
     // flex: 1,
+    width: "100%",
+    display: "flex",
+    justifyContent: "space-between"
   },
   title: {
     ...defaultFont,

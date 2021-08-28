@@ -19,11 +19,13 @@ import AdminNavbarLinks from "./AdminNavbarLinks";
 import Button from "components/CustomButtons/Button.js";
 
 import styles from "assets/jss/material-dashboard-pro-react/components/adminNavbarStyle.js";
+import { useHistory } from "react-router-dom"
 
 const useStyles = makeStyles(styles);
 
 export default function AdminNavbar(props) {
   const classes = useStyles();
+  const history = useHistory();
   const { color, rtlActive, brandText } = props;
   const appBarClasses = cx({
     [" " + classes[color]]: color,
@@ -84,6 +86,13 @@ export default function AdminNavbar(props) {
           <Button href="#" className={classes.title} color="transparent">
             {brandText}
           </Button>
+          <Button 
+            style={{ background: "#3b5998", color: "#ffffff" }}
+            onClick={() => {
+              window.localStorage.removeItem("AUTH_TOKEN_KEY")
+              history.push("/a")
+            }}
+          >Log out</Button>
         </div>
         {/* <Hidden smDown implementation="css">
           <AdminNavbarLinks rtlActive={rtlActive} />
